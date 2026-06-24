@@ -31,7 +31,11 @@ import {
   Heart,
   HelpCircle,
   Clock,
-  ArrowRight
+  ArrowRight,
+  Sun,
+  Eye,
+  Smile,
+  Droplet
 } from "lucide-react";
 
 import Header from "./components/Header";
@@ -118,7 +122,7 @@ const AMENITIES_LIST: AmenityInfo[] = [
     name: "Wide Blacktop Roads",
     category: "Infrastructure",
     description: "Heavy-load structural engineering blacktop internal roads with tidy painted side gutters.",
-    iconName: "Road"
+    iconName: "Activity"
   },
   {
     id: "lights",
@@ -153,7 +157,7 @@ const AMENITIES_LIST: AmenityInfo[] = [
     name: "Shedding Avenue Trees",
     category: "Eco",
     description: "Neatly planted lines of shading and flowering trees framing layout roads.",
-    iconName: "Flower"
+    iconName: "Trees"
   },
   {
     id: "water",
@@ -167,7 +171,7 @@ const AMENITIES_LIST: AmenityInfo[] = [
     name: "Water Disposal System",
     category: "Infrastructure",
     description: "Heavy rainfall-proof channels to discharge layout sewage cleanly and avoid water logs.",
-    iconName: "Container"
+    iconName: "Activity"
   },
   {
     id: "vastu",
@@ -360,7 +364,7 @@ export default function App() {
                   <div className="lg:col-span-7 space-y-6 text-left">
                     <div className="inline-flex items-center space-x-2 bg-emerald-150 text-emerald-905 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-emerald-200 shadow-sm animate-pulse">
                       <Sparkles className="w-4 h-4 text-emerald-800" />
-                      <span>Premum Residential Community</span>
+                      <span>Premium Residential Community</span>
                     </div>
 
                     <h1 className="text-3xl sm:text-4xl md:text-5.5xl font-serif font-black tracking-tight text-emerald-950 leading-[1.1]">
@@ -473,7 +477,7 @@ export default function App() {
                     <h3 className="text-lg font-bold text-stone-900 font-serif">
                       Ideal for Cozy Families
                     </h3>
-                    <p className="text-xs text-stone-600 leading-relaxed text-slate-500">
+                    <p className="text-xs text-stone-605 leading-relaxed">
                       Surrounded by leading academic schools like Maharishi Vidya Mandir (2km) and colleges, with high sweet water reserves, a children's soft play park, and secure walled parameter protection giving total peace of mind for your kids.
                     </p>
                     <ul className="text-xs text-stone-700 space-y-1.5 font-medium pt-2">
@@ -500,7 +504,7 @@ export default function App() {
                     <h3 className="text-lg font-bold text-stone-900 font-serif">
                       Built for Serious Plotted Value
                     </h3>
-                    <p className="text-xs text-stone-600 leading-relaxed text-slate-500">
+                    <p className="text-xs text-stone-605 leading-relaxed">
                       Located in Chengalpattu's premier industrial and logistics corridor. With land prices growing steadily and Mahindra World City (MWC) nearby hosting hundreds of auto and IT multinationals (Nissan, Renault), high rental and reselling demands are guaranteed.
                     </p>
                     <ul className="text-xs text-stone-700 space-y-1.5 font-medium pt-2">
@@ -527,7 +531,7 @@ export default function App() {
                     <h3 className="text-lg font-bold text-stone-900 font-serif">
                       100% Legal Clear-Title Guarantee
                     </h3>
-                    <p className="text-xs text-stone-600 leading-relaxed text-slate-500">
+                    <p className="text-xs text-stone-605 leading-relaxed">
                       Never take risks on unapproved agricultural subdivisions. Sameera Urban Nest is fully legal, backed by approved DTCP structural layout parameters, and RERA registration (TN/35/Layout/1382/2025). Instant registrations and leading bank loans are certified.
                     </p>
                     <ul className="text-xs text-stone-700 space-y-1.5 font-medium pt-2">
@@ -635,7 +639,7 @@ export default function App() {
                             <button
                               key={plot.id}
                               onClick={() => setSelectedSimPlot(plot as any)}
-                              className={`aspect-square p-2 rounded-xl text-xs flex flex-col items-center justify-center font-mono font-bold border transition transition-all cursor-pointer hover:scale-[1.03] ${
+                              className={`aspect-square p-2 rounded-xl text-xs flex flex-col items-center justify-center font-mono font-bold border transition-all cursor-pointer hover:scale-[1.03] ${
                                 isReserved
                                   ? "bg-stone-800 border-stone-800 text-stone-400 cursor-not-allowed"
                                   : isSelected
@@ -668,7 +672,7 @@ export default function App() {
                           <span className="text-stone-300 text-[10px]">Reserved</span>
                         </span>
                       </div>
-                      <p className="text-[10px] text-stone-400 text-emerald-100">
+                      <p className="text-[10px] text-emerald-100">
                         Total plotting space layout: 270 plots
                       </p>
                     </div>
@@ -730,7 +734,7 @@ export default function App() {
                         <div className="pt-4 border-t border-stone-150">
                           <button
                             onClick={() => handleOpenBookingModal(selectedSimPlot.size)}
-                            className="w-full py-3 bg-emerald-900 hover:bg-emerald-800 text-white rounded-xl text-xs font-semibold uppercase tracking-wider transition filter border border-emerald-950 flex items-center justify-center space-x-2"
+                            className="w-full py-3 bg-emerald-900 hover:bg-emerald-800 text-white rounded-xl text-xs font-semibold uppercase tracking-wider transition border border-emerald-950 flex items-center justify-center space-x-2"
                           >
                             <span>Lock This Assignment Profile</span>
                             <ArrowRight className="w-4 h-4 text-emerald-100" />
@@ -846,13 +850,13 @@ export default function App() {
                           </span>
                         </div>
                         <h3 className="text-xl font-bold text-stone-100 mt-2">{plot.size}</h3>
-                        <p className="text-stone-405 text-xs mt-0.5 opacity-75">Dims: {plot.dimensions}</p>
+                        <p className="text-xs mt-0.5 opacity-75">Dims: {plot.dimensions}</p>
                       </div>
 
                       <div className="p-5 space-y-4 flex-1">
                         <div className="flex items-baseline space-x-1.5">
                           <span className="text-2xl font-black text-amber-400">{plot.startingPrice}</span>
-                          <span className="text-stone-305 text-xs opacity-75">Onwards</span>
+                          <span className="text-xs opacity-75">Onwards</span>
                         </div>
 
                         <div className="space-y-1 text-xs text-stone-300 font-medium">
@@ -909,14 +913,14 @@ export default function App() {
                       <div className="space-y-3">
                         <div className="h-10 w-10 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-emerald-900">
                           {i === 0 && <Shield className="w-5 h-5 text-emerald-800" />}
-                          {i === 1 && <Compass className="w-5 h-5 text-emerald-850" />}
-                          {i === 2 && <Compass className="w-5 h-5 text-amber-500" />}
-                          {i === 3 && <Compass className="w-5 h-5 text-blue-600" />}
-                          {i === 4 && <Check className="w-5 h-5 text-emerald-700 stroke-[3]" />}
+                          {i === 1 && <Activity className="w-5 h-5 text-emerald-850" />}
+                          {i === 2 && <Sun className="w-5 h-5 text-amber-500" />}
+                          {i === 3 && <Eye className="w-5 h-5 text-blue-600" />}
+                          {i === 4 && <Smile className="w-5 h-5 text-emerald-700" />}
                           {i === 5 && <Trees className="w-5 h-5 text-emerald-800" />}
-                          {i === 6 && <Trees className="w-5 h-5 text-emerald-705" />}
-                          {i === 7 && <Compass className="w-5 h-5 text-sky-500" />}
-                          {i === 8 && <Compass className="w-5 h-5 text-emerald-900" />}
+                          {i === 6 && <Trees className="w-5 h-5 text-emerald-700" />}
+                          {i === 7 && <Droplet className="w-5 h-5 text-sky-500" />}
+                          {i === 8 && <Activity className="w-5 h-5 text-emerald-900" />}
                           {i === 9 && <Compass className="w-5 h-5 text-amber-600" />}
                         </div>
                         <h3 className="text-sm font-bold text-stone-900 leading-tight">
@@ -993,7 +997,7 @@ export default function App() {
                       
                       {/* Visual clean Map replacement */}
                       <div className="absolute inset-0 z-0 bg-emerald-950/5 flex flex-col items-center justify-center p-6 text-center">
-                        <MapPin className="w-12 h-12 text-emerald-800 filter animate-bounce mb-2" />
+                        <MapPin className="w-12 h-12 text-emerald-800 animate-bounce mb-2" />
                         <h4 className="text-sm font-bold text-emerald-950 font-serif">Sameera Urban Nest Gated community Site</h4>
                         <p className="text-xs text-stone-500 max-w-sm mt-1 leading-relaxed">
                           Athur, Near Chengalpattu Kanchipuram State Highway, Tamil Nadu. Coordinates: 12.6853° N, 79.9572° E
@@ -1189,12 +1193,11 @@ export default function App() {
                   {/* Photo card 2 */}
                   <div className="bg-white rounded-2xl border border-stone-200 p-4 shadow-sm group cursor-pointer" onClick={() => setActivePhoto(COMMUNITY_ROADS_IMG)}>
                     <div className="aspect-[16/9] overflow-hidden rounded-xl bg-stone-100">
-                      <img
-                        src={COMMUNITY_ROADS_IMG}
-                        alt="Wide paved blacktop roads inside Sameera plotting community Athur"
-                        className="w-full h-full object-cover transition duration-500 group-hover:scale-102"
-                        referrerPolicy="no-referrer"
-                      />
+                      src={COMMUNITY_ROADS_IMG}
+                      alt="Wide paved blacktop roads inside Sameera plotting community Athur"
+                      className="w-full h-full object-cover transition duration-500 group-hover:scale-102"
+                      referrerPolicy="no-referrer"
+                    />
                     </div>
                     <div className="text-left mt-3 flex items-center justify-between">
                       <div>
@@ -1231,7 +1234,7 @@ export default function App() {
                       1
                     </span>
                     <h3 className="text-sm font-bold font-serif text-stone-900 mt-2">Choose Plot Sizing</h3>
-                    <p className="text-[11px] text-stone-500 mt-1 lines leading-relaxed">
+                    <p className="text-[11px] text-stone-500 mt-1 leading-relaxed">
                       Select your preferred plot size (600, 1200 or 2400 Sq.Ft) on our layout blueprint.
                     </p>
                   </div>
@@ -1241,7 +1244,7 @@ export default function App() {
                       2
                     </span>
                     <h3 className="text-sm font-bold font-serif text-stone-900 mt-2">Book Free Site Visit</h3>
-                    <p className="text-[11px] text-stone-500 mt-1 lines leading-relaxed">
+                    <p className="text-[11px] text-stone-500 mt-1 leading-relaxed">
                       We arrange free site pick-up and inspection for you and your family to examine plotting first-hand.
                     </p>
                   </div>
@@ -1251,7 +1254,7 @@ export default function App() {
                       3
                     </span>
                     <h3 className="text-sm font-bold font-serif text-stone-900 mt-2">Legal/Loan Check</h3>
-                    <p className="text-[11px] text-stone-500 mt-1 lines leading-relaxed">
+                    <p className="text-[11px] text-stone-500 mt-1 leading-relaxed">
                       Review complete clean title documents on DTCP RERA registry and secure bank loan sanctions.
                     </p>
                   </div>
@@ -1261,7 +1264,7 @@ export default function App() {
                       4
                     </span>
                     <h3 className="text-sm font-bold font-serif text-stone-900 mt-2">Plot Registration</h3>
-                    <p className="text-[11px] text-stone-500 mt-1 lines leading-relaxed">
+                    <p className="text-[11px] text-stone-500 mt-1 leading-relaxed">
                       Complete registration processing at the local Sub-Registrar Office with complete legal executive logs.
                     </p>
                   </div>
@@ -1271,7 +1274,7 @@ export default function App() {
                       5
                     </span>
                     <h3 className="text-sm font-bold font-serif text-emerald-950">Immediate Build!</h3>
-                    <p className="text-[11px] text-emerald-800 mt-1 lines leading-relaxed">
+                    <p className="text-[11px] text-emerald-800 mt-1 leading-relaxed">
                       Plots are registered with sweet water and wide pathways, ready to build instantly!
                     </p>
                   </div>
@@ -1390,14 +1393,14 @@ export default function App() {
                         <span className="font-serif">SU</span>
                       </div>
                       <span className="text-lg font-bold text-stone-100">
-                        Sameera <span className="font-light text-emerald-650 text-emerald-500">Urban Nest</span>
+                        Sameera <span className="font-light text-emerald-500">Urban Nest</span>
                       </span>
                     </div>
                     <p className="text-xs text-stone-500 leading-relaxed max-w-sm">
                       Premium plotting development in Athur, Chengalpattu layout. Approved legally by DTCP & Tamil Nadu RERA (TN/35/Layout/1382/2025). Crafted with engineering precision by Creative Township Developers.
                     </p>
                     <p className="text-[10px] text-stone-600 font-mono">
-                      © {new Date().getFullYear()} Sameera Urban Nest. All Rights Reserved. ctdsameeramrt@gmail.com
+                      © 2026 Sameera Urban Nest. All Rights Reserved. ctdsameeramrt@gmail.com
                     </p>
                   </div>
 
@@ -1497,7 +1500,7 @@ export default function App() {
                 <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden mt-10 mb-10">
                   <button
                     onClick={() => setIsBookingOpen(false)}
-                    className="absolute top-4 right-4 bg-stone-100 hover:bg-stone-200 text-stone-700 p-1.5 rounded-full z-10 transition transition-colors"
+                    className="absolute top-4 right-4 bg-stone-100 hover:bg-stone-200 text-stone-700 p-1.5 rounded-full z-10 transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>

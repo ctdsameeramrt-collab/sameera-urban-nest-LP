@@ -84,7 +84,7 @@ const PLOT_SIZES: PlotSizeInfo[] = [
   },
   {
     size: "1500 Sq.Ft",
-    dimensions: "30 x 50 Ft",
+    dimensions: "30 h 50 Ft",
     startingPrice: "₹21.0 Lakhs",
     estimatedEMI: "₹16,300/month",
     suitability: ["Premium Large Villa", "Multi-Generation Home"],
@@ -408,7 +408,7 @@ export default function App() {
                         <Coins className="w-5 h-5 text-emerald-800 shrink-0" />
                         <div>
                           <p className="text-xs font-bold text-stone-900 leading-none">Bank Loans</p>
-                          <span className="text-[9px] text-stone-550">SBI, HDFC up to 80%</span>
+                          <span className="text-[9px] text-emerald-550">SBI, HDFC up to 80%</span>
                         </div>
                       </div>
                     </div>
@@ -1193,11 +1193,12 @@ export default function App() {
                   {/* Photo card 2 */}
                   <div className="bg-white rounded-2xl border border-stone-200 p-4 shadow-sm group cursor-pointer" onClick={() => setActivePhoto(COMMUNITY_ROADS_IMG)}>
                     <div className="aspect-[16/9] overflow-hidden rounded-xl bg-stone-100">
-                      src={COMMUNITY_ROADS_IMG}
-                      alt="Wide paved blacktop roads inside Sameera plotting community Athur"
-                      className="w-full h-full object-cover transition duration-500 group-hover:scale-102"
-                      referrerPolicy="no-referrer"
-                    />
+                      <img
+                        src={COMMUNITY_ROADS_IMG}
+                        alt="Wide paved blacktop roads inside Sameera plotting community Athur"
+                        className="w-full h-full object-cover transition duration-500 group-hover:scale-102"
+                        referrerPolicy="no-referrer"
+                      />
                     </div>
                     <div className="text-left mt-3 flex items-center justify-between">
                       <div>
@@ -1500,7 +1501,7 @@ export default function App() {
                 <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden mt-10 mb-10">
                   <button
                     onClick={() => setIsBookingOpen(false)}
-                    className="absolute top-4 right-4 bg-stone-100 hover:bg-stone-200 text-stone-700 p-1.5 rounded-full z-10 transition-colors"
+                    className="absolute top-4 right-4 bg-stone-100 hover:bg-stone-200 text-stone-700 p-1.5 rounded-full z-10 transition transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>

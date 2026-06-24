@@ -33,7 +33,7 @@ import {
   Clock,
   ArrowRight,
   Eye,
-  Sun // <-- Add this back if you are using it!
+  Sun, // <-- Add this back if you are using it!
   Smile
 } from "lucide-react";
 

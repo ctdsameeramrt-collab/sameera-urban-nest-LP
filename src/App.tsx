@@ -32,6 +32,7 @@ import {
   HelpCircle,
   Clock,
   ArrowRight,
+  Eye,
   Sun // <-- Add this back if you are using it!
 } from "lucide-react";
 

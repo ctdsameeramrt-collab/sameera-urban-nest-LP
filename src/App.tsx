@@ -32,10 +32,6 @@ import {
   HelpCircle,
   Clock,
   ArrowRight,
-  Sun,
-  Eye,
-  Smile,
-  Droplet
 } from "lucide-react";
 
 import Header from "./components/Header";

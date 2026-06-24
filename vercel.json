@@ -2,12 +2,12 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/dist/server.cjs"
+      "source": "/api/chat",
+      "destination": "/api/chat.ts"
     },
     {
       "source": "/(.*)",
-      "destination": "/dist/index.html"
+      "destination": "/$1"
     }
   ]
 }

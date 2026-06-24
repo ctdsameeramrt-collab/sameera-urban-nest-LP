@@ -34,6 +34,7 @@ import {
   ArrowRight,
   Eye,
   Sun // <-- Add this back if you are using it!
+  Smile
 } from "lucide-react";
 
 import Header from "./components/Header";

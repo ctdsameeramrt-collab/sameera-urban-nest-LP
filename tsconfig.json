@@ -4,7 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "esModuleInterop": true,
-    "skipLibCheck": true, // THIS IS KEY: Prevents TS from checking node_modules
+    "skipLibCheck": true,
     "allowJs": true,
     "jsx": "react-jsx",
     "paths": {

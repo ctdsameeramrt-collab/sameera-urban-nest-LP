@@ -1,63 +1,71 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { GoogleGenAI } from "@google/genai";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const apiKey = process.env.GEMINI_API_KEY;
-const ai = new GoogleGenAI({ apiKey: apiKey });
-
-const PROJECT_KNOWLEDGE = `
-Project Name: Sameera Urban Nest
-Developer: Creative Township Developers
-Project Type: Premium Gated Community Residential Plots
-Location: Athur, Near Chengalpattu, Tamil Nadu (Near GST Road NH45, Near Chengalpattu-Kanchipuram State Highway)
-Project Area: 11.77 Acres total
-Phase Details:
-- Phase 1: 9.61 Acres, featuring 222 Residential Plots
-- Phase 2: 2.16 Acres, featuring 48 Residential Plots
-Total Plots: 270
-Approval Status: DTCP Approved & RERA Approved
-`;
-
-const systemInstruction = `You are Sameera Assistant, a helpful real estate assistant for the "Sameera Urban Nest" housing development project by Creative Township Developers. Your goal is to answer buyers questions based ONLY on the provided project knowledge. Be polite and concise.`;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Support simple CORS requests if needed
+  // CORS Setup
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { message, history = [] } = req.body;
-    const prompt = message || "";
+    // ── 1. API KEY CHECK ──────────────────────────────────────────────────────
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      console.error('[chat] GEMINI_API_KEY is not set');
+      throw new Error('GEMINI_API_KEY is not configured');
+    }
 
-    let formattedContext = PROJECT_KNOWLEDGE + "\n\nConversation History:\n";
-    history.forEach((msg: any) => {
-      const speaker = msg.role === "user" ? "Buyer" : "Agent";
-      formattedContext += `${speaker}: ${msg.text}\n`;
+    // ── 2. BODY PARSING ───────────────────────────────────────────────────────
+    if (!req.body || typeof req.body !== 'object') {
+      return res.status(400).json({ error: 'Bad request', details: 'Body must be JSON' });
+    }
+
+    const { message } = req.body as { message?: string };
+    if (!message || typeof message !== 'string' || message.trim() === '') {
+      return res.status(400).json({ error: 'Bad request', details: '"message" is required' });
+    }
+
+    // ── 3. CALL GEMINI REST API ───────────────────────────────────────────────
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+    const geminiRes = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system_instruction: {
+          parts: [{ text: 'You are Sameera Assistant, a helpful real estate assistant for Sameera Urban Nest.' }],
+        },
+        contents: [{ role: 'user', parts: [{ text: message.trim() }] }],
+        generationConfig: { temperature: 0.7, maxOutputTokens: 1024 },
+      }),
     });
-    formattedContext += `Current prompt from Buyer: ${prompt}\n\nPlease reply as Sameera Assistant.`;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
-      contents: formattedContext,
-      config: {
-        systemInstruction: systemInstruction,
-        temperature: 0.7,
-      }
-    });
+    // ── 4. PARSE RESPONSE ─────────────────────────────────────────────────────
+    const rawText = await geminiRes.text();
+    let data: any;
 
-    return res.status(200).json({ text: response.text });
-  } catch (error: any) {
-    return res.status(500).json({ error: "Chatbot API error", details: error.message });
+    try {
+      data = JSON.parse(rawText);
+    } catch (e) {
+      console.error('[chat] Non-JSON response from Gemini');
+      return res.status(500).json({ error: 'Chatbot API error', details: 'Gemini returned invalid JSON' });
+    }
+
+    if (!geminiRes.ok) {
+      return res.status(geminiRes.status).json({ 
+        error: 'Gemini API error', 
+        details: data?.error?.message ?? 'Unknown error' 
+      });
+    }
+
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "I couldn't generate a response.";
+    return res.status(200).json({ text });
+
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error('[chat] Unhandled error:', message);
+    return res.status(500).json({ error: 'Chatbot API error', details: message });
   }
 }
